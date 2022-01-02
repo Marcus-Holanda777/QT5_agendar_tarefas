@@ -34,9 +34,7 @@ class App(QMainWindow, Ui_MainWindow):
         line.setText(nome_arq)
 
     def schedular(self, periodo: datetime):
-
-        print(periodo)
-        print(periodo.timestamp())
+        print(f'Agendamento - -> > {periodo}\n')
         agenda_root.enterabs(periodo.timestamp(), priority=0,
                              action=self.comando_agendar, argument=[periodo])
         agenda_root.run(blocking=True)
