@@ -20,10 +20,10 @@ class Ui_MainWindow(object):
         self.btnAgenda = QtWidgets.QPushButton(self.centralwidget)
         self.btnAgenda.setGeometry(QtCore.QRect(290, 120, 121, 31))
         self.btnAgenda.setStyleSheet("* {\n"
-"    background-color: #f44336;\n"
-"    color: white;\n"
-"    font-weight: bold;\n"
-"}")
+                                     "    background-color: #f44336;\n"
+                                     "    color: white;\n"
+                                     "    font-weight: bold;\n"
+                                     "}")
         self.btnAgenda.setObjectName("btnAgenda")
         self.dtMarca = QtWidgets.QDateTimeEdit(self.centralwidget)
         self.dtMarca.setGeometry(QtCore.QRect(10, 80, 112, 20))
@@ -43,10 +43,10 @@ class Ui_MainWindow(object):
         self.btnFile = QtWidgets.QPushButton(self.centralwidget)
         self.btnFile.setGeometry(QtCore.QRect(330, 30, 75, 23))
         self.btnFile.setStyleSheet("* {\n"
-"    background-color: #1E90FF;\n"
-"    color: white;\n"
-"    font-weight: bold;\n"
-"}")
+                                   "    background-color: #1E90FF;\n"
+                                   "    color: white;\n"
+                                   "    font-weight: bold;\n"
+                                   "}")
         self.btnFile.setObjectName("btnFile")
         self.lbArquivo = QtWidgets.QLabel(self.centralwidget)
         self.lbArquivo.setGeometry(QtCore.QRect(10, 10, 47, 13))
