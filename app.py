@@ -5,12 +5,8 @@ from PyQt5.QtWidgets import QDateTimeEdit, QFileDialog, QLineEdit, QTableWidgetI
 from PyQt5.QtWidgets import QTableWidget, QMessageBox
 import sys
 from datetime import datetime, timedelta
-import sched
-import time
+from time import sleep
 import subprocess
-
-
-agenda_root = sched.scheduler(timefunc=time.time)
 
 
 class App(QMainWindow, Ui_MainWindow):
@@ -33,15 +29,17 @@ class App(QMainWindow, Ui_MainWindow):
         nome_arq, _ = QFileDialog.getOpenFileName(filter=('*.py'))
         line.setText(nome_arq)
 
-    def schedular(self, periodo: datetime):
-        print(f'Agendamento - -> > {periodo}\n')
-        agenda_root.enterabs(periodo.timestamp(), priority=0,
-                             action=self.comando_agendar, argument=[periodo])
-        agenda_root.run(blocking=True)
+    def schedular(self, periodo: datetime, comando):
+        print(f'Arquivo: {comando}, Agendado para --> > {periodo}\n')
+        while True:
+            if datetime.now() > periodo:
+                self.comando_agendar(periodo, comando)
+                break
+            sleep(1)
 
-    def comando_agendar(self, periodo: datetime):
-        cam = '\\'.join(self.lineFile.text().split('/')[:-1])
-        arq = self.lineFile.text().split('/')[-1]
+    def comando_agendar(self, periodo: datetime, comando_comp):
+        cam = '\\'.join(comando_comp.split('/')[:-1])
+        arq = comando_comp.split('/')[-1]
         comando = 'python %s' % arq
 
         print(f'Caminho: {cam}, comando: {comando}')
@@ -49,7 +47,7 @@ class App(QMainWindow, Ui_MainWindow):
 
         novoAgenda = periodo + timedelta(days=1)
 
-        self.schedular(novoAgenda)
+        self.schedular(novoAgenda, comando_comp)
 
     def btn_inserir(self):
         dtMarca: QDateTimeEdit = self.dtMarca
@@ -75,7 +73,7 @@ class App(QMainWindow, Ui_MainWindow):
                 tblAgenda.resizeRowsToContents()
 
                 job = threading.Thread(target=self.schedular, args=[
-                    dtMarca.dateTime().toPyDateTime()])
+                    dtMarca.dateTime().toPyDateTime(), self.lineFile.text()])
                 job.start()
         else:
             QMessageBox.critical(
